@@ -1,7 +1,12 @@
+import { afterTick } from "$lib/internal/afterTick.js";
+import { watch } from "$lib/internal/box.svelte.js";
+import { useStateMachine } from "$lib/internal/useStateMachine.svelte.js";
 import { type ReadableBox, type WritableBox, box } from "svelte-toolbelt";
-import { afterTick, useStateMachine, watch } from "$lib/internal/index.js";
 
-export function usePresence(present: ReadableBox<boolean>, id: ReadableBox<string>) {
+export function usePresence(
+	present: ReadableBox<boolean>,
+	id: ReadableBox<string>
+) {
 	const styles = box({}) as unknown as WritableBox<CSSStyleDeclaration>;
 	const prevAnimationNameState = box("none");
 	const initialState = present.value ? "mounted" : "unmounted";
@@ -43,7 +48,10 @@ export function usePresence(present: ReadableBox<boolean>, id: ReadableBox<strin
 
 		if (currPresent) {
 			dispatch("MOUNT");
-		} else if (currAnimationName === "none" || styles.value.display === "none") {
+		} else if (
+			currAnimationName === "none" ||
+			styles.value.display === "none"
+		) {
 			// If there is no exit animation or the element is hidden, animations won't run
 			// so we unmount instantly
 			dispatch("UNMOUNT");
@@ -77,7 +85,8 @@ export function usePresence(present: ReadableBox<boolean>, id: ReadableBox<strin
 		if (!node) return;
 		const currAnimationName = getAnimationName(node);
 		const isCurrentAnimation =
-			currAnimationName.includes(event.animationName) || currAnimationName === "none";
+			currAnimationName.includes(event.animationName) ||
+			currAnimationName === "none";
 
 		if (event.target === node && isCurrentAnimation) {
 			dispatch("ANIMATION_END");
@@ -100,7 +109,8 @@ export function usePresence(present: ReadableBox<boolean>, id: ReadableBox<strin
 		}
 		if (!node) return;
 		const currAnimationName = getAnimationName(node);
-		prevAnimationNameState.value = state.value === "mounted" ? currAnimationName : "none";
+		prevAnimationNameState.value =
+			state.value === "mounted" ? currAnimationName : "none";
 	});
 
 	$effect(() => {
@@ -119,7 +129,9 @@ export function usePresence(present: ReadableBox<boolean>, id: ReadableBox<strin
 		};
 	});
 
-	const isPresentDerived = $derived(["mounted", "unmountSuspended"].includes(state.value));
+	const isPresentDerived = $derived(
+		["mounted", "unmountSuspended"].includes(state.value)
+	);
 
 	return {
 		get value() {

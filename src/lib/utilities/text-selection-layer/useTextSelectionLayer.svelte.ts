@@ -1,19 +1,20 @@
 import { untrack } from "svelte";
 import type { ReadableBox, WritableBox } from "svelte-toolbelt";
-import type { TextSelectionLayerImplProps, TextSelectionLayerProps } from "./types.js";
+import type { TextSelectionLayerImplProps } from "./types.js";
+import type { ReadableBoxedValues } from "$lib/internal/box.svelte.js";
 import {
-	type EventCallback,
-	type ReadableBoxedValues,
 	addEventListener,
 	composeHandlers,
-	executeCallbacks,
-	isHTMLElement,
-	isOrContainsTarget,
-	noop,
-	useNodeById,
-} from "$lib/internal/index.js";
+	type EventCallback,
+} from "$lib/internal/events.js";
+import { executeCallbacks, noop } from "$lib/internal/callbacks.js";
+import { useNodeById } from "$lib/internal/useNodeById.svelte.js";
+import { isHTMLElement } from "$lib/internal/is.js";
+import { isOrContainsTarget } from "$lib/internal/elements.js";
 
-type StateProps = ReadableBoxedValues<Required<Omit<TextSelectionLayerImplProps, "children">>>;
+type StateProps = ReadableBoxedValues<
+	Required<Omit<TextSelectionLayerImplProps, "children">>
+>;
 
 const layers = new Map<TextSelectionLayerState, ReadableBox<boolean>>();
 
@@ -62,7 +63,8 @@ class TextSelectionLayerState {
 	#pointerdown = (e: PointerEvent) => {
 		const node = this.#node.value;
 		const target = e.target;
-		if (!isHTMLElement(node) || !isHTMLElement(target) || !this.#enabled.value) return;
+		if (!isHTMLElement(node) || !isHTMLElement(target) || !this.#enabled.value)
+			return;
 		/**
 		 * We only lock user-selection overflow if layer is the top most layer and
 		 * pointerdown occured inside the node. You are still allowed to select text
@@ -84,7 +86,8 @@ export function useTextSelectionLayer(props: StateProps) {
 	return new TextSelectionLayerState(props);
 }
 
-const getUserSelect = (node: HTMLElement) => node.style.userSelect || node.style.webkitUserSelect;
+const getUserSelect = (node: HTMLElement) =>
+	node.style.userSelect || node.style.webkitUserSelect;
 
 function preventTextSelectionOverflow(node: HTMLElement) {
 	const body = document.body;

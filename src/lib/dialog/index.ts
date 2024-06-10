@@ -11,7 +11,6 @@ export type {
 	DialogRootProps as RootProps,
 	DialogTitleProps as TitleProps,
 	DialogCloseProps as CloseProps,
-	DialogPortalProps as PortalProps,
 	DialogContentProps as ContentProps,
 	DialogOverlayProps as OverlayProps,
 	DialogTriggerProps as TriggerProps,

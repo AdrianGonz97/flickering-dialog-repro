@@ -6,21 +6,21 @@ import type {
 	InteractOutsideEvent,
 	InteractOutsideInterceptEventType,
 } from "./types.js";
+import { useNodeById } from "$lib/internal/useNodeById.svelte.js";
 import {
-	type Box,
-	type EventCallback,
-	type ReadableBoxedValues,
-	addEventListener,
-	afterTick,
-	composeHandlers,
-	debounce,
-	executeCallbacks,
 	getOwnerDocument,
-	isElement,
 	isOrContainsTarget,
-	noop,
-	useNodeById,
-} from "$lib/internal/index.js";
+} from "$lib/internal/elements.js";
+import { executeCallbacks, noop } from "$lib/internal/callbacks.js";
+import { afterTick } from "$lib/internal/afterTick.js";
+import {
+	addEventListener,
+	composeHandlers,
+	type EventCallback,
+} from "$lib/internal/events.js";
+import { debounce } from "$lib/internal/debounce.js";
+import { isElement } from "$lib/internal/is.js";
+import type { Box, ReadableBoxedValues } from "$lib/internal/box.svelte.js";
 
 const layers = new Map<
 	DismissableLayerState,
