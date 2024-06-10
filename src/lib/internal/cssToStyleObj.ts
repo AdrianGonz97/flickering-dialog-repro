@@ -1,8 +1,7 @@
 import parse from "style-to-object";
 import { camelCase, pascalCase } from "scule";
-import type { StyleProperties } from "$lib/shared/index.js";
 
-export function cssToStyleObj(css: string | null | undefined): StyleProperties {
+export function cssToStyleObj(css: string | null | undefined) {
 	if (!css) return {};
 	const styleObj: Record<string, unknown> = {};
 

@@ -3,7 +3,6 @@ import { type EventCallback, composeHandlers } from "./events.js";
 import { styleToString } from "./style.js";
 import { cssToStyleObj } from "./cssToStyleObj.js";
 import { executeCallbacks } from "./callbacks.js";
-import type { StyleProperties } from "$lib/shared/index.js";
 
 type Props = Record<string, unknown>;
 
@@ -15,7 +14,9 @@ type TupleTypes<T> = { [P in keyof T]: T[P] } extends { [key: number]: infer V }
 	: never;
 type NullToObject<T> = T extends null | undefined ? {} : T;
 // eslint-disable-next-line ts/no-explicit-any
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
+	k: infer I
+) => void
 	? I
 	: never;
 
@@ -59,7 +60,11 @@ export function mergeProps<T extends PropsArg[]>(
 			} else if (typeof a === "function" && typeof b === "function") {
 				// chain non-event handler functions
 				result[key] = executeCallbacks(a, b);
-			} else if (key === "class" && typeof a === "string" && typeof b === "string") {
+			} else if (
+				key === "class" &&
+				typeof a === "string" &&
+				typeof b === "string"
+			) {
 				// handle merging class strings
 				result[key] = clsx(a, b);
 			} else if (key === "style") {
@@ -93,7 +98,7 @@ export function mergeProps<T extends PropsArg[]>(
 
 	// convert style object to string
 	if ("style" in result && typeof result.style === "object") {
-		result.style = styleToString(result.style as StyleProperties);
+		result.style = styleToString(result.style as any);
 	}
 
 	// handle weird svelte bug where `hidden` is not removed when set to `false`
