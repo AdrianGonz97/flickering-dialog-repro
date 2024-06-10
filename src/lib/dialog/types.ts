@@ -13,7 +13,7 @@ import type {
 import type { PortalProps } from "$lib/utilities/portal/index.js";
 import type { EventCallback } from "$lib/internal/events.js";
 
-export type DialogRootPropsWithoutHTML = {
+type DialogRootPropsWithoutHTML = {
 	/**
 	 * The open state of the dialog.
 	 */
@@ -29,7 +29,7 @@ export type DialogRootPropsWithoutHTML = {
 
 export type DialogRootProps = DialogRootPropsWithoutHTML;
 
-export type DialogContentPropsWithoutHTML = WithAsChild<
+type DialogContentPropsWithoutHTML = WithAsChild<
 	EscapeLayerProps &
 		DismissableLayerProps &
 		PresenceLayerProps &
@@ -42,21 +42,21 @@ export type DialogContentPropsWithoutHTML = WithAsChild<
 export type DialogContentProps = DialogContentPropsWithoutHTML &
 	PrimitiveDivAttributes;
 
-export type DialogOverlayPropsWithoutHTML = WithAsChild<PresenceLayerProps>;
+type DialogOverlayPropsWithoutHTML = WithAsChild<PresenceLayerProps>;
 export type DialogOverlayProps = DialogOverlayPropsWithoutHTML &
 	PrimitiveDivAttributes;
 
-export type DialogPortalPropsWithoutHTML = PortalProps;
-export type DialogPortalProps = DialogPortalPropsWithoutHTML;
+type DialogPortalPropsWithoutHTML = PortalProps;
+type DialogPortalProps = DialogPortalPropsWithoutHTML;
 
-export type DialogTriggerPropsWithoutHTML = WithAsChild<{
+type DialogTriggerPropsWithoutHTML = WithAsChild<{
 	onclick?: EventCallback<MouseEvent>;
 }>;
 
 export type DialogTriggerProps = DialogTriggerPropsWithoutHTML &
 	PrimitiveButtonAttributes;
 
-export type DialogTitlePropsWithoutHTML = WithAsChild<{
+type DialogTitlePropsWithoutHTML = WithAsChild<{
 	/**
 	 * The heading level of the dialog title.
 	 */
@@ -66,9 +66,9 @@ export type DialogTitlePropsWithoutHTML = WithAsChild<{
 export type DialogTitleProps = DialogTitlePropsWithoutHTML &
 	PrimitiveDivAttributes;
 
-export type DialogClosePropsWithoutHTML = DialogTriggerPropsWithoutHTML;
+type DialogClosePropsWithoutHTML = DialogTriggerPropsWithoutHTML;
 export type DialogCloseProps = DialogTriggerProps;
 
-export type DialogDescriptionPropsWithoutHTML = WithAsChild<{}>;
+type DialogDescriptionPropsWithoutHTML = WithAsChild<{}>;
 export type DialogDescriptionProps = DialogDescriptionPropsWithoutHTML &
 	PrimitiveDivAttributes;

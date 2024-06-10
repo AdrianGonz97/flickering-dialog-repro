@@ -1,6 +1,6 @@
 import type { Snippet } from "svelte";
 
-export type PointerHandler = (e: PointerEvent) => void;
+type PointerHandler = (e: PointerEvent) => void;
 
 export type TextSelectionLayerProps = {
 	/**

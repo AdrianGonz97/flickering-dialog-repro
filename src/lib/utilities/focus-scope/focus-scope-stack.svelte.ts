@@ -1,6 +1,6 @@
 import { box } from "svelte-toolbelt";
 
-export type FocusScopeAPI = {
+type FocusScopeAPI = {
 	paused: boolean;
 	pause: () => void;
 	resume: () => void;
@@ -46,7 +46,7 @@ export function createFocusScopeAPI(): FocusScopeAPI {
 	};
 }
 
-export function removeFromArray<T>(arr: T[], item: T) {
+function removeFromArray<T>(arr: T[], item: T) {
 	const updatedArr = [...arr];
 	const index = updatedArr.indexOf(item);
 	if (index !== -1) updatedArr.splice(index, 1);

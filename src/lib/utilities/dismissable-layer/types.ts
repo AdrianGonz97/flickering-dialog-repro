@@ -1,7 +1,7 @@
 import type { Snippet } from "svelte";
 
 export type InteractOutsideEvent = PointerEvent | MouseEvent | TouchEvent;
-export type InteractOutsideEventHandler = (e: InteractOutsideEvent) => void;
+type InteractOutsideEventHandler = (e: InteractOutsideEvent) => void;
 
 export type InteractOutsideBehaviorType =
 	| "close"

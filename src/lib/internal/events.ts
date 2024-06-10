@@ -10,11 +10,7 @@ type MeltEvent<T extends Event = Event> = {
 	preventDefault: () => void;
 };
 
-export type SvelteEvent<T extends Event = Event, U extends EventTarget = EventTarget> = T & {
-	currentTarget: EventTarget & U;
-};
-
-export function createDispatcher<M extends Element = Element>() {
+function createDispatcher<M extends Element = Element>() {
 	const dispatch = createEventDispatcher();
 	return (e: MeltEvent) => {
 		const { originalEvent } = e.detail;
@@ -33,14 +29,15 @@ export function createDispatcher<M extends Element = Element>() {
 	};
 }
 
-export type CreateDispatcher = {
-	createDispatcher: typeof createDispatcher;
-};
-
 export type EventCallback<E extends Event = Event> = (event: E) => void;
 
-export function composeHandlers<E extends Event = Event, T extends Element = Element>(
-	...handlers: Array<EventCallback<E> | ReadableBox<EventCallback<E>> | undefined>
+export function composeHandlers<
+	E extends Event = Event,
+	T extends Element = Element
+>(
+	...handlers: Array<
+		EventCallback<E> | ReadableBox<EventCallback<E>> | undefined
+	>
 ): (e: E) => void {
 	return function (this: T, e: E) {
 		for (const handler of handlers) {
@@ -54,7 +51,7 @@ export function composeHandlers<E extends Event = Event, T extends Element = Ele
 	};
 }
 
-export type GeneralEventListener<E = Event> = (evt: E) => unknown;
+type GeneralEventListener<E = Event> = (evt: E) => unknown;
 
 export function addEventListener<E extends keyof WindowEventMap>(
 	target: Window,
@@ -97,22 +94,8 @@ export function addEventListener(
 
 	// Return a function that removes the event listener from the target element(s).
 	return () => {
-		events.forEach((_event) => target.removeEventListener(_event, handler, options));
+		events.forEach((_event) =>
+			target.removeEventListener(_event, handler, options)
+		);
 	};
-}
-
-export function handleAndDispatchCustomEvent<E extends CustomEvent, OriginalEvent extends Event>(
-	name: string,
-	handler: ((event: E) => void) | undefined,
-	detail: { originalEvent: OriginalEvent } & (E extends CustomEvent<infer D> ? D : never)
-) {
-	const target = detail.originalEvent.target;
-	const event = new CustomEvent(name, {
-		bubbles: false,
-		cancelable: true,
-		detail,
-	});
-	if (handler) target.addEventListener(name, handler as EventListener, { once: true });
-
-	target.dispatchEvent(event);
 }

@@ -41,7 +41,7 @@ type DismissableLayerStateProps = ReadableBoxedValues<
 	Required<Omit<DismissableLayerImplProps, "children">>
 >;
 
-export class DismissableLayerState {
+class DismissableLayerState {
 	#interactOutsideStartProp: ReadableBox<EventCallback<InteractOutsideEvent>>;
 	#interactOutsideProp: ReadableBox<EventCallback<InteractOutsideEvent>>;
 	#behaviorType: ReadableBox<InteractOutsideBehaviorType>;
@@ -301,4 +301,4 @@ function isValidEvent(e: InteractOutsideEvent, node: HTMLElement): boolean {
 	return isValid;
 }
 
-export type FocusOutsideEvent = CustomEvent<{ originalEvent: FocusEvent }>;
+type FocusOutsideEvent = CustomEvent<{ originalEvent: FocusEvent }>;

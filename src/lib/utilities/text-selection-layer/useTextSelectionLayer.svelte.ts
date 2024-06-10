@@ -17,7 +17,7 @@ type StateProps = ReadableBoxedValues<Required<Omit<TextSelectionLayerImplProps,
 
 const layers = new Map<TextSelectionLayerState, ReadableBox<boolean>>();
 
-export class TextSelectionLayerState {
+class TextSelectionLayerState {
 	#onPointerDownProp: ReadableBox<EventCallback<PointerEvent>>;
 	#onPointerUpProp: ReadableBox<EventCallback<PointerEvent>>;
 	#enabled: ReadableBox<boolean>;

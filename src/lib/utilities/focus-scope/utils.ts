@@ -54,7 +54,7 @@ export function getTabbableCandidates(container: HTMLElement) {
 	return nodes;
 }
 
-export function isSelectableInput(
+function isSelectableInput(
 	element: unknown
 ): element is FocusableTarget & { select: () => void } {
 	return element instanceof HTMLInputElement && "select" in element;
@@ -75,14 +75,14 @@ export function focus(element?: FocusableTarget | null, { select = false } = {})
  * Returns the first visible element in a list.
  * NOTE: Only checks visibility up to the `container`.
  */
-export function findVisible(elements: HTMLElement[], container: HTMLElement) {
+function findVisible(elements: HTMLElement[], container: HTMLElement) {
 	for (const element of elements) {
 		// we stop checking if it's hidden at the `container` level (excluding)
 		if (!isHidden(element, { upTo: container })) return element;
 	}
 }
 
-export function isHidden(node: HTMLElement, { upTo }: { upTo?: HTMLElement }) {
+function isHidden(node: HTMLElement, { upTo }: { upTo?: HTMLElement }) {
 	if (getComputedStyle(node).visibility === "hidden") return true;
 	while (node) {
 		// we stop at `upTo` (excluding it)

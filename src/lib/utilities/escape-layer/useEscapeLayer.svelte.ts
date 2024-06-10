@@ -10,7 +10,7 @@ const layers = new Map<EscapeLayerState, ReadableBox<EscapeBehaviorType>>();
 
 type EscapeLayerStateProps = ReadableBoxedValues<Required<Omit<EscapeLayerImplProps, "children">>>;
 
-export class EscapeLayerState {
+class EscapeLayerState {
 	#onEscapeProp: ReadableBox<EventCallback<KeyboardEvent>>;
 	#behaviorType: ReadableBox<EscapeBehaviorType>;
 	#enabled: ReadableBox<boolean>;

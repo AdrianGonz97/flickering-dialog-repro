@@ -8,11 +8,6 @@ import { useId } from "./useId.svelte.js";
 import { createSharedHook } from "./createSharedHook.svelte.js";
 import { watch } from "$lib/internal/box.svelte.js";
 
-export type ScrollBodyOption = {
-	padding?: boolean | number;
-	margin?: boolean | number;
-};
-
 const useBodyLockStackCount = createSharedHook(() => {
 	const map = new Map<string, boolean>();
 
@@ -25,7 +20,9 @@ const useBodyLockStackCount = createSharedHook(() => {
 		return false;
 	});
 
-	let initialBodyStyle: Partial<CSSStyleDeclaration> = $state<Partial<CSSStyleDeclaration>>({});
+	let initialBodyStyle: Partial<CSSStyleDeclaration> = $state<
+		Partial<CSSStyleDeclaration>
+	>({});
 
 	let stopTouchMoveListener: Fn | null = null;
 
@@ -56,8 +53,12 @@ const useBodyLockStackCount = createSharedHook(() => {
 			initialBodyStyle.pointerEvents = bodyStyle.pointerEvents;
 
 			// TODO: account for RTL direction, etc.
-			const verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-			const paddingRight = Number.parseInt(initialBodyStyle.paddingRight ?? "0", 10);
+			const verticalScrollbarWidth =
+				window.innerWidth - document.documentElement.clientWidth;
+			const paddingRight = Number.parseInt(
+				initialBodyStyle.paddingRight ?? "0",
+				10
+			);
 
 			const config = {
 				padding: paddingRight + verticalScrollbarWidth,
@@ -67,7 +68,10 @@ const useBodyLockStackCount = createSharedHook(() => {
 			if (verticalScrollbarWidth > 0) {
 				document.body.style.paddingRight = `${config.padding}px`;
 				document.body.style.marginRight = `${config.margin}px`;
-				document.body.style.setProperty("--scrollbar-width", `${verticalScrollbarWidth}px`);
+				document.body.style.setProperty(
+					"--scrollbar-width",
+					`${verticalScrollbarWidth}px`
+				);
 				document.body.style.overflow = "hidden";
 			}
 
